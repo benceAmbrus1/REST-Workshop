@@ -9,13 +9,15 @@ import java.util.List;
 
 public class UsersService {
 
-    public void creatNewUser(String[] eAndp) throws EmailAlreadyExistException {
+    public User creatNewUser(String[] eAndp) throws EmailAlreadyExistException {
+        User tempU;
         if(SingletonDB.getInstance().allUserEmail().contains(eAndp[0])){
             throw new EmailAlreadyExistException("Email already exist");
         }else {
-            User tempU = new User(eAndp[1], eAndp[0]);
+            tempU = new User(eAndp[1], eAndp[0]);
             SingletonDB.getInstance().getUsers().add(tempU);
         }
+        return tempU;
     }
 
     public void deleteAllUser(){

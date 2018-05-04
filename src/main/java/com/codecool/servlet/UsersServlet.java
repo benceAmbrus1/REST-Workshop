@@ -1,6 +1,7 @@
 package com.codecool.servlet;
 
 import com.codecool.exception.EmailAlreadyExistException;
+import com.codecool.model.User;
 import com.codecool.service.UsersService;
 
 import javax.servlet.ServletException;
@@ -22,8 +23,9 @@ public class UsersServlet extends HttpServlet{
         String[] emailAndPass = req.getReader().readLine().split(";");
 
         try {
-            service.creatNewUser(emailAndPass);
+            User u = service.creatNewUser(emailAndPass);
             resp.setStatus(201);
+            resp.addHeader("Location","/users/" + u.getId());
 
         } catch (EmailAlreadyExistException e) {
             resp.setStatus(409);
