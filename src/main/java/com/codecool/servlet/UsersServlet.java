@@ -1,5 +1,6 @@
 package com.codecool.servlet;
 
+import com.codecool.Singleton.SingletonDB;
 import com.codecool.exception.EmailAlreadyExistException;
 import com.codecool.service.UsersService;
 
@@ -28,5 +29,12 @@ public class UsersServlet extends HttpServlet{
             resp.setStatus(409);
 
         }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        SingletonDB.getInstance().removeUsers();
+        resp.setStatus(204);
     }
 }

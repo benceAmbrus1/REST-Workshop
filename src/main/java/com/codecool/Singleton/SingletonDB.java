@@ -28,4 +28,8 @@ public class SingletonDB {
             emails.add(u.getEmail());
         }return emails;
     }
+
+    public void removeUsers(){
+        users = new ArrayList<>();
+    }
 }
