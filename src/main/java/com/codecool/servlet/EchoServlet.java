@@ -15,7 +15,6 @@ public class EchoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String message = req.getReader().readLine();
-
         PrintWriter out = resp.getWriter();
         resp.setStatus(200);
 
