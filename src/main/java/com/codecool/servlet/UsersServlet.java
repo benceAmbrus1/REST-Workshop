@@ -19,12 +19,10 @@ public class UsersServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         UsersService service = new UsersService();
-        String id = req.getParameter("id");
-        String name = req.getParameter("name");
-        String email = req.getParameter("email");
+        String[] emailAndPass = req.getReader().readLine().split(";");
 
         try {
-            service.creatNewUser(Integer.parseInt(id), name, email);
+            service.creatNewUser(emailAndPass);
             resp.setStatus(201);
 
         } catch (EmailAlreadyExistException e) {
