@@ -21,4 +21,11 @@ public class SingletonDB {
     public List<User> getUsers() {
         return users;
     }
+
+    public List<String> allUserEmail(){
+        List<String> emails = new ArrayList<>();
+        for (User u:users){
+            emails.add(u.getEmail());
+        }return emails;
+    }
 }
