@@ -1,6 +1,5 @@
 package com.codecool.servlet;
 
-import com.codecool.Singleton.SingletonDB;
 import com.codecool.exception.EmailAlreadyExistException;
 import com.codecool.service.UsersService;
 
@@ -10,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet("/users")
 public class UsersServlet extends HttpServlet{
@@ -18,11 +19,12 @@ public class UsersServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         UsersService service = new UsersService();
+        String id = req.getParameter("id");
         String name = req.getParameter("name");
         String email = req.getParameter("email");
 
         try {
-            service.creatNewUser(name, email);
+            service.creatNewUser(Integer.parseInt(id), name, email);
             resp.setStatus(201);
 
         } catch (EmailAlreadyExistException e) {
@@ -34,7 +36,28 @@ public class UsersServlet extends HttpServlet{
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        SingletonDB.getInstance().removeUsers();
-        resp.setStatus(204);
+        UsersService service = new UsersService();
+        if(service.isThereUser()){
+            service.deleteAllUser();
+            resp.setStatus(200);
+        }else{
+            resp.setStatus(204);
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UsersService service = new UsersService();
+
+        if(service.isThereUser()) {
+            List<String> users = service.getUsers();
+            PrintWriter out = resp.getWriter();
+            resp.setStatus(200);
+            for (String s : users) {
+                out.write(s);
+            }
+        }else{
+            resp.setStatus(204);
+        }
     }
 }
