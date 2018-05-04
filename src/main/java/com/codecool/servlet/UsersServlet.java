@@ -1,5 +1,8 @@
 package com.codecool.servlet;
 
+import com.codecool.model.User;
+import com.codecool.service.UsersService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +14,13 @@ import java.io.IOException;
 public class UsersServlet extends HttpServlet{
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        UsersService service = new UsersService();
+        String name = req.getParameter("name");
+        String email = req.getParameter("email");
+
+        service.creatNewUser(name, email);
+
     }
 }
