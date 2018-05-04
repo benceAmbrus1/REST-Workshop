@@ -26,7 +26,7 @@ public class UsersServlet extends HttpServlet{
 
         } catch (EmailAlreadyExistException e) {
             resp.setStatus(409);
-            
+
         }
     }
 }
